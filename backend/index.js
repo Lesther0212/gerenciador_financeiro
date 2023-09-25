@@ -6,7 +6,7 @@ const porta = 3000;
 const connection = mysql.createPool({
     host: 'localhost',
     port: 3306,
-    database: 'testepessoa',
+    database: 'mydb',
     user: 'root',
     password: ''
 });
@@ -71,7 +71,7 @@ app.post('/pessoa', async (req, res) => {
     }
 });
 
-app.put('/pessoa/:id', async (req, res) => {
+app.put('/pessoa/:id', async (req, res) => { 
     const { id } = req.params;
     const { nome, email } = req.body;
     try {
