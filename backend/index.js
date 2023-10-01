@@ -14,83 +14,83 @@ const connection = mysql.createPool({
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/pessoa', async (req, res) => {
+app.get('/usuario', async (req, res) => {
     try {
-        const [query] = await connection.execute('SELECT * FROM pessoa');
+        const [query] = await connection.execute('SELECT * FROM usuario');
         res.status(200).json(query);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao buscar pessoas' });
+        res.status(500).json({ mensagem: 'Erro ao buscar usuarios' });
     }
 });
 
-app.get('/pessoa/:id', async (req, res) => {
+app.get('/usuario/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const [query] = await connection.execute('SELECT * FROM pessoa WHERE id = ?', [id]);
-        if (query.length === 0) return res.status(404).json({ mensagem: 'Pessoa não encontrada' });
+        const [query] = await connection.execute('SELECT * FROM usuario WHERE id = ?', [id]);
+        if (query.length === 0) return res.status(404).json({ mensagem: 'usuario não encontrada' });
         res.status(200).json(query);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao buscar pessoa' });
+        res.status(500).json({ mensagem: 'Erro ao buscar usuario' });
     }
 });
 
-app.get('/pessoa/buscarnome/:nome', async (req, res) => {
+app.get('/usuario/buscarnome/:nome', async (req, res) => {
     const { nome } = req.params;
     try {
-        const [query] = await connection.execute('SELECT * FROM pessoa WHERE nome LIKE ?', [`%${nome}%`]);
-        if (query.length === 0) return res.status(404).json({ mensagem: 'Nenhuma pessoa encontrada' });
+        const [query] = await connection.execute('SELECT * FROM usuario WHERE nome LIKE ?', [`%${nome}%`]);
+        if (query.length === 0) return res.status(404).json({ mensagem: 'Nenhuma usuario encontrada' });
         res.status(200).json(query);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao buscar pessoas por nome' });
+        res.status(500).json({ mensagem: 'Erro ao buscar usuarios por nome' });
     }
 });
 
-app.get('/pessoa/buscaremail/:email', async (req, res) => {
+app.get('/usuario/buscaremail/:email', async (req, res) => {
     const { email } = req.params;
     try {
-        const [query] = await connection.execute('SELECT * FROM pessoa WHERE email LIKE ?', [`%${email}%`]);
-        if (query.length === 0) return res.status(404).json({ mensagem: 'Nenhuma pessoa encontrada' });
+        const [query] = await connection.execute('SELECT * FROM usuario WHERE email LIKE ?', [`%${email}%`]);
+        if (query.length === 0) return res.status(404).json({ mensagem: 'Nenhuma usuario encontrada' });
         res.status(200).json(query);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao buscar pessoas por email' });
+        res.status(500).json({ mensagem: 'Erro ao buscar usuarios por email' });
     }
 });
 
-app.post('/pessoa', async (req, res) => {
+app.post('/usuario', async (req, res) => {
     const { nome, email } = req.body;
     try {
-        const [query] = await connection.execute('INSERT INTO pessoa (nome, email) VALUES (?, ?)', [nome, email]);
+        const [query] = await connection.execute('INSERT INTO usuario (nome, email) VALUES (?, ?)', [nome, email]);
         res.status(201).json(query);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao criar pessoa' });
+        res.status(500).json({ mensagem: 'Erro ao criar usuario' });
     }
 });
 
-app.put('/pessoa/:id', async (req, res) => { 
+app.put('/usuario/:id', async (req, res) => { 
     const { id } = req.params;
     const { nome, email } = req.body;
     try {
-        const [query] = await connection.execute('UPDATE pessoa SET nome = ?, email = ? WHERE id = ?', [nome, email, id]);
+        const [query] = await connection.execute('UPDATE usuario SET nome = ?, email = ? WHERE id = ?', [nome, email, id]);
         res.status(200).json(query);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao atualizar pessoa' });
+        res.status(500).json({ mensagem: 'Erro ao atualizar usuario' });
     }
 });
 
-app.delete('/pessoa/:id', async (req, res) => {
+app.delete('/usuario/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const [query] = await connection.execute('DELETE FROM pessoa WHERE id = ?', [id]);
+        const [query] = await connection.execute('DELETE FROM usuario WHERE id = ?', [id]);
         res.status(200).json(query);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao deletar pessoa' });
+        res.status(500).json({ mensagem: 'Erro ao deletar usuario' });
     }
 });
 
