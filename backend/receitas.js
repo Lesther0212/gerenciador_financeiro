@@ -14,15 +14,6 @@ const connection = mysql.createPool({
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-class Receitas {
-    constructor(descricao, valor, data, categoriaReceitaId) {
-        this.descricao = descricao;
-        this.valor = valor;
-        this.data = data;
-        this.categoriaReceitaId = categoriaReceitaId;
-    }
-}
-
 // Operação para salvar uma receita
 app.post('/receitas', async (req, res) => {
     const { descricao, valor, data, categoriaReceitaId } = req.body;
