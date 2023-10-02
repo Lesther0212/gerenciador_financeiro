@@ -14,15 +14,30 @@ const connection = mysql.createPool({
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/usuario', async (req, res) => {
-    try {
-        const [query] = await connection.execute('SELECT * FROM usuario');
-        res.status(200).json(query);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao buscar usuarios' });
+const getAllPessoas = async () => {
+    const [query] = await conection.execute('select * from usuario')
+    return query
+};
+
+// retorna a lista de usuários
+app.get('/usuario/', async (req, res) => {
+    const resultado = await getAllPessoas()
+
+    if (resultado.length === 0) {
+        return res.status(200).json({ mensagem: 'Nenhum usuário encontrado no database!' });
     }
+    return res.status(200).json(resultado);
 });
+
+// app.get('/usuario', async (req, res) => {
+//     try {
+//         const [query] = await connection.execute('SELECT * FROM usuario');
+//         res.status(200).json(query);
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ mensagem: 'Erro ao buscar usuarios' });
+//     }
+// });
 
 app.get('/usuario/:id', async (req, res) => {
     const { id } = req.params;

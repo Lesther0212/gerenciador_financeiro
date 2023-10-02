@@ -42,6 +42,18 @@ app.get('/receitas/:id', async (req, res) => {
     }
 });
 
+// Operação para obter uma receita por ID
+app.get('/receitas/', async (req, res) => {
+    try {
+        const [query] = await connection.execute('SELECT * FROM receitas');
+        if (query.length === 0) return res.status(404).json({ mensagem: 'Receita não encontrada' });
+        res.status(200).json(query[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ mensagem: 'Erro ao buscar receita' });
+    }
+});
+
 // Operação para buscar receitas por descrição
 app.get('/receitas/buscar/:descricao', async (req, res) => {
     const { descricao } = req.params;
