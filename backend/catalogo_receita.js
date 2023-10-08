@@ -38,6 +38,18 @@ app.get('/categoriaReceita/:id', async (req, res) => {
     }
 });
 
+// Operação para obter uma categoria receita
+app.get('/categoriaReceita/', async (req, res) => {
+    try {
+        const [query] = await connection.execute('SELECT * FROM categoria_receita');
+        if (query.length === 0) return res.status(404).json({ mensagem: 'CategoriaReceita não encontrada' });
+        res.status(200).json(query[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ mensagem: 'Erro ao buscar CategoriaReceita' });
+    }
+});
+
 // Operação para buscar Categoria Receita por nome
 app.get('/categoriaReceita/buscar/:nome', async (req, res) => {
     const { nome } = req.params;

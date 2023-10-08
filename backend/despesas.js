@@ -51,6 +51,18 @@ app.get('/despesas/:id', async (req, res) => {
     }
 });
 
+// Operação para obter uma despesa
+app.get('/despesas/', async (req, res) => {
+    try {
+        const [query] = await connection.execute('SELECT * FROM despesas');
+        if (query.length === 0) return res.status(404).json({ mensagem: 'Despesa não encontrada' });
+        res.status(200).json(query[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ mensagem: 'Erro ao buscar despesa' });
+    }
+});
+
 // Operação para buscar despesas por descrição
 app.get('/despesas/buscar/:descricao', async (req, res) => {
     const { descricao } = req.params;
