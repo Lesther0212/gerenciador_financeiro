@@ -14,15 +14,6 @@ const connection = mysql.createPool({
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-class Despesas {
-    constructor(descricao, valor, data, categoriaDespesaId) {
-        this.descricao = descricao;
-        this.valor = valor;
-        this.data = data;
-        this.categoriaDespesaId = categoriaDespesaId;
-    }
-}
-
 // Operação para salvar uma despesa
 app.post('/despesas', async (req, res) => {
     const { descricao, valor, data, categoriaDespesaId } = req.body;

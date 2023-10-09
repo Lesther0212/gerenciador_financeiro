@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const getAllPessoas = async () => {
-    const [query] = await conection.execute('select * from usuario')
+    const [query] = await connection.execute('select * from usuario')
     return query
 };
 
